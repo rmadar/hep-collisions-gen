@@ -20,10 +20,24 @@ install Delphes
 ```
 
 > **Note:** the Delphes compilation might fail if the installed ROOT version is not compatible.
+> In that case, a compatible version of ROOT must be installed and Delphes can be compiled by hand,
+> doing:
+> ```
+> cd Delphes
+> ./configure
+> make
+> ```
 
-3. Compile the display library of Delphes and produce `libDelphesDisplay.so`, to have event display
+3. Compile the display library of Delphes and produce `libDelphesDisplay.so`, to enable event display.
 ```
 cd Delphes
 ./configure
 make display
 ```
+
+## Usage
+
+The workflow consists in first generating the hard-scattering setup (directory) with MadGraph
+using a "process card". Then, the showering of events is performed with Pythia and
+the detector simulation is ran with Delphes. The three steps can be done in one
+step using a `run_madevent.config`. The following line details the procedure.
