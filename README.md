@@ -62,6 +62,6 @@ root -l rootlogon.C
 root[0] .x EventDisplay.C("../MG5_aMC/Delphes/cards/delphes_card_ATLAS.tcl","delphes_events.root")
 ```
 
-![Event Display example](analyse/evtDisplay.jpg)
+![Event Display example](analysis/evtDisplay.jpg)
 
 ### Analyze events
