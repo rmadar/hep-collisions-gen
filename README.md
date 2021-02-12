@@ -51,9 +51,22 @@ using a "process card". Then, the showering of events is performed with Pythia a
 the detector simulation is ran with Delphes. The three steps can be done in one
 step using a `run_madevent.config`. The following line details the procedure.
 
-### Preparing a process setup
+### Generate events for a process
 
-### Generate events for this process
+Under dev
+
+```
+cd MG_aMC/
+./bin/mg5_aMC ../generate/gen.sh
+cd output/.
+./bin/generate_events [enabling shower and detector]
+
+```
+
+> What we want:
+>  + specification of intput state (particle, energy, polarization), output state, model parameter.
+>  + specification of detector simulation (Delphes card)
+>  + create a script, which run all MG steps and produce a ntuple ready to be analyzed.
 
 ### Inspect event displays
 
