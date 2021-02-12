@@ -9,11 +9,13 @@ This requires to have [ROOT](https://root.cern/) installed.
 
 ## Setup
 
-1. Download MadGraph: https://launchpad.net/mg5amcnlo
+> **Note:** in what follow, `version` should be replaced by the actual MG version.
+
+1. Download MadGraph: https://launchpad.net/mg5amcnlo. Untar the archive as `MG5_aMC/` directory.
 
 2. Install needed pythia and Delphes
 ```
-cd MG5_aMC_version/
+cd MG5_aMC/
 ./bin/mg5_aMC
 install pythia8
 install Delphes
@@ -35,9 +37,31 @@ cd Delphes
 make display
 ```
 
+4. Data analysis and event display: link/load the required libraries
+```
+cd analysis
+ln -s ../MG5_aMC/Delphes/libDelphesDisplay.so .
+```
+
+
 ## Usage
 
-The workflow consists in first generating the hard-scattering setup (directory) with MadGraph
+The workflow consists in first generating the process setup (directory) with MadGraph
 using a "process card". Then, the showering of events is performed with Pythia and
 the detector simulation is ran with Delphes. The three steps can be done in one
 step using a `run_madevent.config`. The following line details the procedure.
+
+### Preparing a process setup
+
+### Generate events for this process
+
+### Inspect event displays
+
+```
+root -l rootlogon.C
+root[0] .x EventDisplay.C("../MG5_aMC/Delphes/cards/delphes_card_ATLAS.tcl","delphes_events.root")
+```
+
+![Event Display example](analyse/evtDisplay.jpg)
+
+### Analyze events
