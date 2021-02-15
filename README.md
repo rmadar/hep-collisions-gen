@@ -54,16 +54,22 @@ directly distributions.
 
 ### Generate events for a process
 
-A [python interface](generate/generation_handler.py) is designed to ease the event generation.
-An [example](generate/example.py) is featuring how to generate `p p -> t tbar` and `mu mu -> t tbar`
-using this python interface. There are two classes, but the first one is not mandatory:
- + `collision`: initial state (particle, energy, polarization, pdf) and final state
+A [python interface](generate/generation_handler.py) is designed to ease the event generation, based
+on the MadGraph syntax. An [example](generate/example.py) is featuring how to
+generate `p p -> t tbar` and `mu mu -> t tbar` using this python interface. There are two
+classes, but the first one is not mandatory:
+ + `collision`: initial state (particle, energy, polarization, pdf) and final state, currently only supporting the syntax `xx > yy (y > zz, y > zz)`
  + `madgraph`: running the actual event generation with several options such as pythia or delphes.
+
+**Creation of a e+e- collision with polarized beams**
+```
+import generation_handler as gen
+ee = gen.collision('e+ e-', 't t~', ebeam1='180', ebeam2='180', polbeam1='1', polbeam1='2')
+```
 
 ### Analyze parton-level events (LHE format)
 
-Several options are possible using LHE parsers. For low number of events, typically o(10000), one can use this [python parser](https://github.com/scikit-hep/pylhe) hosted in [scikit-hep](https://scikit-hep.org/) project, but for larger samples one can use a [go parser](https://pkg.go.dev/go-hep.org/x/hep@v0.28.4/lhef) hosted in [go-hep](https://go-hep.org/) project (an example for $ttbar$ final state can be found in this [repository](https://github.com/rmadar/go-simple-examples/tree/master/lhe2root).
-
+Several options are possible using LHE parsers. For low number of events, typically o(10000), one can use this [python parser](https://github.com/scikit-hep/pylhe) hosted by the [scikit-hep](https://scikit-hep.org/) project, but for larger samples one can use a [go parser](https://pkg.go.dev/go-hep.org/x/hep@v0.28.4/lhef) hosted by the [go-hep](https://go-hep.org/) project (an example for `ttbar` final state can be found in this [repository](https://github.com/rmadar/go-simple-examples/tree/master/lhe2root).
 
 ### Analyze reconstructed-level events, with pythia and delphes enabled
 
