@@ -79,7 +79,7 @@ mg.gen_evts(directory='ee_ttbar', run='run01', params=ee.params())
 
 ### Analyze parton-level events (LHE format)
 
-Several options are possible using LHE parsers. For low number of events, typically o(10000), one can use this [python parser](https://github.com/scikit-hep/pylhe) hosted by the [scikit-hep](https://scikit-hep.org/) project, but for larger samples one can use a [go parser](https://pkg.go.dev/go-hep.org/x/hep@v0.28.4/lhef) hosted by the [go-hep](https://go-hep.org/) project (an example for `ttbar` final state can be found in this [repository](https://github.com/rmadar/go-simple-examples/tree/master/lhe2root).
+Several options are possible using LHE parsers. For low number of events, typically o(10000), one can use this [python parser](https://github.com/scikit-hep/pylhe) hosted by the [scikit-hep](https://scikit-hep.org/) project, but for larger samples one can use a [go parser](https://pkg.go.dev/go-hep.org/x/hep@v0.28.4/lhef) hosted by the [go-hep](https://go-hep.org/) project (an example for `ttbar -> dilepton` final state can be found in this [repository](https://github.com/rmadar/go-simple-examples/tree/master/lhe2root).
 
 ### Analyze reconstructed-level events, with pythia and delphes enabled
 
