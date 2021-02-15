@@ -62,7 +62,7 @@ classes, but the first one is not mandatory:
  + `madgraph`: running the actual event generation with several options such as pythia or delphes.
 
 **Creation of a e+e- collision with polarized beams**
-```
+```python
 import generation_handler as gen
 ee = gen.collision('e+ e-', 't t~', ebeam1='180', ebeam2='180', polbeam1='1', polbeam1='2')
 ```
