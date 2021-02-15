@@ -60,8 +60,9 @@ using this python interface. There are two classes, but the first one is not man
  + `collision`: initial state (particle, energy, polarization, pdf) and final state
  + `madgraph`: running the actual event generation with several options such as pythia or delphes.
 
-### Analyze parton-level events
+### Analyze parton-level events (LHE format)
 
+Several options are possible using LHE parsers. For low number of events, typically o(10000), one can use this [python parser](https://github.com/scikit-hep/pylhe) hosted in [scikit-hep](https://scikit-hep.org/) project, but for larger samples one can use a [go parser](https://pkg.go.dev/go-hep.org/x/hep@v0.28.4/lhef) hosted in [go-hep](https://go-hep.org/) project (an example for $ttbar$ final state can be found in this [repository](https://github.com/rmadar/go-simple-examples/tree/master/lhe2root).
 
 
 ### Analyze reconstructed-level events, with pythia and delphes enabled
