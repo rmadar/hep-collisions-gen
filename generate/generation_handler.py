@@ -63,7 +63,7 @@ class collision:
         
         return
 
-    def process(self):
+    def mg_proc(self):
         '''
         Return the MG process to be pu in the proc card
         '''

@@ -9,7 +9,7 @@ This requires to have [ROOT](https://root.cern/) installed.
 
 ## Setup
 
-> **Note:** in what follow, `version` should be replaced by the actual MG version.
+> **Note:** the file `setup.sh` must be adapted to **your** setup to have a ROOT version compatible with Delphes. 
 
 1. Download MadGraph: https://launchpad.net/mg5amcnlo. Untar the archive as `MG5_aMC/` directory.
 
@@ -53,28 +53,21 @@ step using a `run_madevent.config`. The following line details the procedure.
 
 ### Generate events for a process
 
-Under dev
+A [python interface](generate/generation_handler.py) is designed to ease the event generation.
+An [example](generate/example.py) is featuring how to generate `p p -> t tbar` and `mu mu -> t tbar`
+using this python interface. There are two classes, but the first one is not mandatory:
+ + `collision`: initial state (particle, energy, polarization, pdf) and final state
+ + `madgraph`: running the actual event generation with several options such as pythia or delphes.
 
-```
-cd MG_aMC/
-./bin/mg5_aMC ../generate/gen.sh
-cd output/.
-./bin/generate_events [enabling shower and detector]
-
-```
-
-> What we want:
->  + specification of intput state (particle, energy, polarization), output state, model parameter.
->  + specification of detector simulation (Delphes card)
->  + create a script, which run all MG steps and produce a ntuple ready to be analyzed.
 
 ### Inspect event displays
 
 ```
 root -l rootlogon.C
-root[0] .x EventDisplay.C("../MG5_aMC/Delphes/cards/delphes_card_ATLAS.tcl","delphes_events.root")
+root[0] .x EventDisplay.C("../MG5_aMC/Delphes/cards/delphes_card_ATLAS.tcl", "delphes_events.root")
 ```
 
 ![Event Display example](analysis/evtDisplay.jpg)
+
 
 ### Analyze events
