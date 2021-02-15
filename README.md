@@ -60,18 +60,11 @@ using this python interface. There are two classes, but the first one is not man
  + `collision`: initial state (particle, energy, polarization, pdf) and final state
  + `madgraph`: running the actual event generation with several options such as pythia or delphes.
 
-
-### Inspect event displays
-
-```
-root -l rootlogon.C
-root[0] .x EventDisplay.C("../MG5_aMC/Delphes/cards/delphes_card_ATLAS.tcl", "delphes_events.root")
-```
-
-![Event Display example](analysis/evtDisplay.jpg)
+### Analyze parton-level events
 
 
-### Analyze events, after pythia and delphes
+
+### Analyze reconstructed-level events, with pythia and delphes enabled
 
 There are two options: the first one is to simply create a code skeleton using
 ```
@@ -81,3 +74,14 @@ root[0] Delphes->MakeClass()
 The second option, a bit less code-verbose, is to use classes provided by Delphes
 which are automatically loaded if you use this [`rootlogon.C`](analysis/rootlogon.C).
 An example of such analysis code can be found [here](analysis/ana.C).
+
+### Inspect event displays, with pythia and delphes enabled
+
+```
+root -l rootlogon.C
+root[0] .x EventDisplay.C("../MG5_aMC/Delphes/cards/delphes_card_ATLAS.tcl", "delphes_events.root")
+```
+
+![Event Display example](analysis/evtDisplay.jpg)
+
+
