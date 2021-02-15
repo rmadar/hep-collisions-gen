@@ -48,8 +48,9 @@ ln -s ../MG5_aMC/Delphes/libDelphesDisplay.so .
 
 The workflow consists in first generating the process setup (directory) with MadGraph
 using a "process card". Then, the showering of events is performed with Pythia and
-the detector simulation is ran with Delphes. The three steps can be done in one
-step using a `run_madevent.config`. The following line details the procedure.
+the detector simulation is ran with Delphes. A ROOT file is then produced which contains
+different collections of objects. This ROOT file can be used to get event display or
+directly distributions.
 
 ### Generate events for a process
 
