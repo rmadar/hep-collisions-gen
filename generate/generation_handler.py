@@ -159,8 +159,9 @@ class madgraph:
 
         f.close()
 
-        # Source the environement, in particular the proper ROOT version
-        os.system('source ../setup.sh')
+        # Source the environement, if a setup if found
+        if os.path.isfile('../setup.sh'):
+            os.system('source ../setup.sh')
         
         # Create the directory
         os.system('{}/bin/mg5_aMC {}_gen.txt'.format(self.path, directory))
