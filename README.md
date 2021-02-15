@@ -71,4 +71,13 @@ root[0] .x EventDisplay.C("../MG5_aMC/Delphes/cards/delphes_card_ATLAS.tcl", "de
 ![Event Display example](analysis/evtDisplay.jpg)
 
 
-### Analyze events
+### Analyze events, after pythia and delphes
+
+There are two options: the first one is to simply create a code skeleton using
+```
+root delphes_events.root
+root[0] Delphes->MakeClass()
+```
+The second option, a bit less code-verbose, is to use classes provided by Delphes
+which are automatically loaded if you use this [`rootlogon.C`](analysis/rootlogon.C).
+An example of such analysis code can be found [here](analysis/ana.C).
