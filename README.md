@@ -58,13 +58,23 @@ A [python interface](generate/generation_handler.py) is designed to ease the eve
 on the MadGraph syntax. An [example](generate/example.py) is featuring how to
 generate `p p -> t tbar` and `mu mu -> t tbar` using this python interface. There are two
 classes, but the first one is not mandatory:
- + `collision`: initial state (particle, energy, polarization, pdf) and final state, currently only supporting the syntax `xx > yy (y > zz, y > zz)`
+ + `collision`: initial state (particle, energy, polarization, pdf) and final state,
+    currently only supporting the syntax `xx > yy` possibly with specified decays `(y > zz, y > zz)`
  + `madgraph`: running the actual event generation with several options such as pythia or delphes.
 
-**Creation of a e+e- collision with polarized beams**
+**In a nutshell: generate e+e- collision with polarized beams**
 ```python
 import generation_handler as gen
+
+# Define collision setup
 ee = gen.collision('e+ e-', 't t~', ebeam1='180', ebeam2='180', polbeam1='1', polbeam1='2')
+
+# Get a MadGraph instance
+mg = gen.madgraph('../MG5_aMC')
+
+# Generate events, with the proper beam parameters (energy and polarization)
+mg.run_proc_dir(proc=ee.mg_proc(), directory='ee_ttbar')
+mg.gen_evts(directory='ee_ttbar', run='run01', params=ee.params())
 ```
 
 ### Analyze parton-level events (LHE format)
