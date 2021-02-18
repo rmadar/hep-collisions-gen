@@ -74,7 +74,7 @@ mg = gen.madgraph('../MG5_aMC')
 
 # Generate events, with the proper beam parameters (energy and polarization)
 mg.run_proc_dir(proc=ee.mg_proc(), directory='ee_ttbar')
-mg.gen_evts(directory='ee_ttbar', run='run01', params=ee.params())
+mg.gen_evts(directory='ee_ttbar', run='run01', params=ee.beam_params())
 ```
 
 ### Analyze parton-level events (LHE format)
