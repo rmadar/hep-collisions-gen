@@ -12,9 +12,9 @@ mg.run_proc_dir(proc=pp.mg_proc(), directory='lhc_ttbar')
 mg.run_proc_dir(proc=mm.mg_proc(), directory='muc_ttbar')
 
 # Generate events for the LHC
-params = {'nevents': 5000, **pp.params()}
+params = {'nevents': 5000, **pp.beam_params()}
 mg.gen_evts('lhc_ttbar', 'run01', params, pythia=True, delphes=True)
 
 # Generate events for the muon collider
-params = {'nevents': 5000, **mm.params()}
+params = {'nevents': 5000, **mm.beam_params()}
 mg.gen_evts('muc_ttbar', 'run01', params, pythia=True, delphes=True)

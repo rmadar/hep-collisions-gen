@@ -18,8 +18,8 @@ mg.run_proc_dir(proc=mm.mg_proc(), directory='mm_ttbar')
 mg.run_proc_dir(proc=tt.mg_proc(), directory='tt_ttbar')
 
 # Generate events for the LHC
-mg.gen_evts('pp_ttbar', 'run01', pp.params())
-mg.gen_evts('ee_ttbar', 'run01', ee.params())
-mg.gen_evts('mm_ttbar', 'run01', mm.params())
-mg.gen_evts('tt_ttbar', 'run01', tt.params())
+mg.gen_evts('pp_ttbar', 'run01', pp.beam_params())
+mg.gen_evts('ee_ttbar', 'run01', ee.beam_params())
+mg.gen_evts('mm_ttbar', 'run01', mm.beam_params())
+mg.gen_evts('tt_ttbar', 'run01', tt.beam_params())
 

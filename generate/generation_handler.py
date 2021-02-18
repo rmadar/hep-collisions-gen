@@ -69,9 +69,9 @@ class collision:
         '''
         return '{} > {}'.format(self.inital_state, self.final_sate)
 
-    def params(self):
+    def beam_params(self):
         '''
-        Return a dictionnary of parameters as to be specified
+        Return a dictionnary of beam parameters as to be specified
         in un_card.dat, used by MG.
         '''
         return {
