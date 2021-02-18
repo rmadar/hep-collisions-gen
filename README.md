@@ -67,7 +67,7 @@ classes, but the first one is not mandatory:
 import generation_handler as gen
 
 # Define collision setup
-ee = gen.collision('e+ e-', 't t~', ebeam1='180', ebeam2='180', polbeam1='1', polbeam1='2')
+ee = gen.collision('e+ e-', 't t~', ebeam1='180', ebeam2='180', polbeam1='1', polbeam1='0')
 
 # Get a MadGraph instance
 mg = gen.madgraph('../MG5_aMC')
