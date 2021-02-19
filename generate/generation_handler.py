@@ -43,24 +43,6 @@ class collision:
         self.beam1_polarization = polbeam1
         self.beam2_polarization = polbeam2
 
-        # Check that only two particles collide
-        part0 = self.inital_state.split(' ')
-        if len(part0) != 2:
-            err = 'There {} particles in the intial state {}, while it should be two'
-            raise NameError( err.format(len(part0), self.inital_state) )
-        
-        # PDF for beam in case of conpound initial state
-        self.beam1_pdf = '0'
-        self.beam2_pdf = '0'
-        if part0[0] == 'p':
-            self.beam1_pdf = '1'
-        if part0[0] == 'p~':
-            self.beam1_pdf = '-1'
-        if part0[1] == 'p':
-            self.beam2_pdf = '1'
-        if part0[1] == 'p~':
-            self.beam2_pdf = '-1'
-        
         return
 
     def mg_proc(self):
@@ -75,8 +57,6 @@ class collision:
         in un_card.dat, used by MG.
         '''
         return {
-            'lpp1'    : self.beam1_pdf,
-            'lpp2'    : self.beam2_pdf,
             'ebeam1'  : self.beam1_energy,
             'ebeam2'  : self.beam2_energy,
             'polbeam1': self.beam1_polarization,
@@ -108,13 +88,23 @@ class madgraph:
         self.path = path
     
 
-    def run_proc_dir(self, proc, directory):
+    def run_proc_dir(self, proc, directory, eeISR=False):
         '''
         This function creates the process directory
         later used to compute cross-section and 
         generate events.
         '''
 
+        # Checking that eeISR is called for e+ e- collisions only
+        istate = proc.split('>')[0].strip()
+        if eeISR:
+            if istate != 'e+ e-' and istate != 'e- e+':
+                war  = '\n\n [generation_handler.madgraph WARNING] eeISR is enabled '
+                war += 'for \'{}\' initial state, while only \'e+ e-\' is supported. '
+                war += 'Will do nothing.\n\n'
+                print(war.format(istate))
+                eeISR = False
+        
         # Create the proc card on the fly
         f = open('{}.txt'.format(directory), 'w')
         f.write('import model sm\n\n')
@@ -127,7 +117,11 @@ class madgraph:
         f.write('define vl = ve vm vt\n')
         f.write('define vl~ = ve~ vm~ vt~\n\n')
         f.write('generate {}\n\n'.format(proc))
-        f.write('output {}'.format(directory))
+        print(eeISR)
+        if eeISR:
+            f.write('output EE_ISR {}'.format(directory))
+        else:
+            f.write('output {}'.format(directory))
         f.close()
 
         # Create the directory
@@ -137,15 +131,32 @@ class madgraph:
         os.system('cp {}.txt {}'.format(directory, directory))
 
         
-    def gen_evts(self, directory, run, params={}, pythia=False, delphes=False):
+    def gen_evts(self, directory, run, params={}, beam_params={}, pythia=False, delphes=False):
         '''
         This function generates events of a given process, 
         based on its directory.
+        
+         - directory [string]: name of the process directory, it must be created
+                               before using run_proc_dir()
+         - run [string]: name of the run
+         - params [dict]: parameters to be changed, given as {param_name: param_value}
+         - beam_params [dict]: beam parameters to be changed, can be directly collision.beam_params()
+         - pythia [bool]: enabling showering with pythia
+         - delphes [bool]: enabling detector simulation
         '''
 
+        # Check the directory exists
+        if not os.path.exists(directory):
+            err  = '\n\n [generation_handler.madgraph ERROR] Directory {} doesn\'t exist,'
+            err += 'please make sure you called mg.run_proc_dir(proc, \'{}\') first'
+            raise NameError(err.format(directory, directory))
+        
         # Create proc_card on the fly
         f = open('{}_gen.txt'.format(directory), 'w')
         f.write('launch {} -n {} \n'.format(directory, run))
+
+        # Disable analysis by default
+        f.write('analysis=OFF\n')
 
         # Adding showering and detector simulation
         if pythia:

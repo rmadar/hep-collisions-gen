@@ -6,14 +6,25 @@ Generation of simulated high energy collisions data using
 and [Delphes](https://github.com/delphes/delphes) (detector fast simulation).
 This requires to have [ROOT](https://root.cern/) installed.
 
+> **Note:** MG v2.6.7 is used to exploit a plugin implementing initial state radiations, which is not released in MG today (02/21).
+> This plugin doesn't work with current latest version v2.9.2.
 
-## Setup
+
+## Setup using MG v2.6.7
 
 > **Note:** the file `setup.sh` must be adapted to **your** setup to have a ROOT version compatible with Delphes. 
 
-1. Download MadGraph: https://launchpad.net/mg5amcnlo. Untar the archive as `MG5_aMC/` directory.
+1. Download MadGraph and untar the archive as `MG5_aMC/`:
+```
+wget https://launchpad.net/mg5amcnlo/2.0/2.6.x/+download/MG5_aMC_v2.6.7.tar.gz
+tar -xvzf MG5_aMC_v2.6.7.tar.gz
+mv MG5_aMC_v2_6_7/ MG5_aMC
+```
+In order to have the initial state radiations accounted for electrons-positrons collisions, one need to download this plugin
+[MGISR](https://github.com/qliphy/MGISR) and put it in `MG5_aMC/PLUGIN`. Enabling ee ISR is then done through the python interface,
+described below, at the level of `mg.run_proc_dir()` function (creating the process directory).
 
-2. Install needed pythia and Delphes
+2. Install needed modules: Pythia and Delphes
 ```
 cd MG5_aMC/
 ./bin/mg5_aMC
@@ -73,7 +84,7 @@ ee = gen.collision('e+ e-', 't t~', ebeam1='180', ebeam2='180', polbeam1='1', po
 mg = gen.madgraph('../MG5_aMC')
 
 # Generate events, with the proper beam parameters (energy and polarization)
-mg.run_proc_dir(proc=ee.mg_proc(), directory='ee_ttbar')
+mg.run_proc_dir(proc=ee.mg_proc(), directory='ee_ttbar', eeISR=True)
 mg.gen_evts(directory='ee_ttbar', run='run01', params=ee.beam_params())
 ```
 
