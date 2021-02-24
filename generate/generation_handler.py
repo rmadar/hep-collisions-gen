@@ -88,11 +88,16 @@ class madgraph:
         self.path = path
     
 
-    def run_proc_dir(self, proc, directory, eeISR=False):
+    def run_proc_dir(self, proc, directory, eeISR=False, NLO=False):
         '''
         This function creates the process directory
         later used to compute cross-section and 
         generate events.
+         - proc [string]: MG-syntax process, e.g. 'p p > e+ e-', can be obtained with
+                          collision.mg_proc() if collision class is used.
+         - directory [string]: name of the MG directory where events can be generated
+         - eeISR [bool]: include ISR for e+ e- initial state only
+         - NLO [bool]: enable NLO (in QCD) prediction in MG
         '''
 
         # Checking that eeISR is called for e+ e- collisions only
@@ -116,12 +121,16 @@ class madgraph:
         f.write('define l- = e- mu-\n')
         f.write('define vl = ve vm vt\n')
         f.write('define vl~ = ve~ vm~ vt~\n\n')
-        f.write('generate {}\n\n'.format(proc))
-        print(eeISR)
-        if eeISR:
-            f.write('output EE_ISR {}'.format(directory))
+
+        if NLO:
+            f.write('generate {} [QCD]\n\n'.format(proc))
         else:
-            f.write('output {}'.format(directory))
+            f.write('generate {}\n\n'.format(proc))
+        
+        if eeISR:
+            f.write('output EE_ISR {}\n'.format(directory))
+        else:
+            f.write('output {}\n'.format(directory))
         f.close()
 
         # Create the directory
