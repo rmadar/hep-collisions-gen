@@ -91,13 +91,13 @@ class madgraph:
     def run_proc_dir(self, proc, directory, eeISR=False, NLO=False):
         '''
         This function creates the process directory
-        later used to compute cross-section and 
-        generate events.
-         - proc [string]: MG-syntax process, e.g. 'p p > e+ e-', can be obtained with
-                          collision.mg_proc() if collision class is used.
+        later used to compute cross-section and generate events.
+         - proc [string]     : MG-syntax process, e.g. 'p p > e+ e-', can be obtained with
+                               collision.mg_proc() if collision class is used.
          - directory [string]: name of the MG directory where events can be generated
-         - eeISR [bool]: include ISR for e+ e- initial state only
-         - NLO [bool]: enable NLO (in QCD) prediction in MG
+         - eeISR [bool]      : include ISR for e+ e- initial state only, and LO only
+         - NLO [bool]        : enable NLO (in QCD) prediction in MG, incompatible with ISRs.
+                               If both eeISR and NLO are true, eeISR will be disabled.
         '''
 
         # Checking that eeISR is called for e+ e- collisions only
@@ -108,6 +108,10 @@ class madgraph:
                 war += 'for \'{}\' initial state, while only \'e+ e-\' is supported. '
                 war += 'Will do nothing.\n\n'
                 print(war.format(istate))
+                eeISR = False
+            if NLO:
+                war  = '\n\n [generation_handler.madgraph WARNING] eeISR is enabled '
+                war += 'while NLO is enabled too: turning eeISR off.'
                 eeISR = False
         
         # Create the proc card on the fly
@@ -140,7 +144,7 @@ class madgraph:
         os.system('cp {}.txt {}'.format(directory, directory))
 
         
-    def gen_evts(self, directory, run, params={}, beam_params={}, pythia=False, delphes=False):
+    def gen_evts(self, directory, run, params={}, pythia=False, delphes=False):
         '''
         This function generates events of a given process, 
         based on its directory.
